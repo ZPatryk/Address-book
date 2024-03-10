@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Company contact book</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header class="top-header">
+        <h1><a href="/">Company contact book</a></h1>
+    </header>
+    <div th:if="${selectedUnitName}">
+        <h2 th:text="'' + ${selectedUnitName}"></h2>
+    </div>
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th>Imię</th>
+            <th>Pozycja zawodowa</th>
+            <th>Email</th>
+            <th>Telefon komórkowy</th>
+            <th>Telefon stacjonarny</th>
+        </tr>
+        </thead>
+        <tbody>
+
+        <th:block th:each="user : ${departmentUsers}">
+            <tr>
+                <td th:text="${user.fname}"></td>
+                <td th:text="${user.jobposition}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.mobile}"></td>
+                <td th:text="${user.landline}"></td>
+            </tr>
+        </th:block>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

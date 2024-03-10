@@ -1,0 +1,23 @@
+/* Styl dla całej tabeli */
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+/* Styl dla nagłówków i komórek danych */
+th, td {
+    border: 1px solid #dddddd;
+    text-align: left;
+    padding: 8px;
+}
+
+/* Styl dla wierszy o parzystym numerze */
+tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+/* Styl dla nagłówków tabeli */
+th {
+    background-color: #dddddd;
+    color: #333333;
+}

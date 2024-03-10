@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Company contact book</title>
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
+</head>
+<body>
+
+<div class="container">
+
+    <header class="top-header">
+        <h1><a href="/">Company contact book</a></h1>
+    </header>
+
+    <form id="searchForm" action="/search" method="post">
+        <label for="query">Wyszukaj użytkownika po imieniu lub nazwisku:</label><br>
+        <input type="text" id="query" name="query"><br><br>
+    </form>
+
+
+
+    <select id="organizational" name="Organization" onchange="redirectToEndpoint(this)">
+        <option value=".">Wybierz jednostkę</option>
+        <option value="/1">Dział Kadr</option>
+        <option value="/2">Dział Produkcji</option>
+    </select>
+    <br>
+    <br>
+    <br>
+    <table>
+        <thead>
+        <tr>
+            <th>Imię</th>
+            <th>Pozycja zawodowa</th>
+            <th>Email</th>
+            <th>Telefon komórkowy</th>
+            <th>Telefon stacjonarny</th>
+        </tr>
+        </thead>
+        <tbody>
+        <th:block th:each="entry : ${usersByUnit}">
+            <tr>
+                <td colspan="5" style="font-weight: bold;" th:text="${entry.key.unitName}"></td>
+            </tr>
+            <th:block th:each="user : ${entry.value}">
+                <tr>
+                    <td th:text="${user.fname}"></td>
+                    <td th:text="${user.jobposition}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.mobile}"></td>
+                    <td th:text="${user.landline}"></td>
+                </tr>
+            </th:block>
+        </th:block>
+
+        <tr>
+            <td colspan="5" style="font-weight: bold;">Pozostali użytkownicy</td>
+        </tr>
+        <th:block th:each="user : ${usersWithoutUnit}">
+            <tr>
+                <td th:text="${user.fname}"></td>
+                <td th:text="${user.jobposition}"></td>
+                <td th:text="${user.email}"></td>
+                <td th:text="${user.mobile}"></td>
+                <td th:text="${user.landline}"></td>
+            </tr>
+        </th:block>
+
+
+        <tr th:if="${usersByUnit.isEmpty()}">
+            <td colspan="5">Brak danych do wyświetlenia</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+<script>
+    function redirectToEndpoint(select) {
+        var selectedOption = select.value;
+        if (selectedOption !== ".") {
+            window.location.href = selectedOption;
+        }
+    }
+</script>
+<script>
+    document.getElementById('query').addEventListener('input', function() {
+      var query = this.value;
+      if (query.length >= 3) { // Wyszukiwanie rozpocznie się po wpisaniu co najmniej 3 znaków
+        var form = document.getElementById('searchForm');
+        form.submit(); // Automatyczne wysłanie formularza po wpisaniu zapytania
+      }
+    });
+</script>
+</body>
+</html>
